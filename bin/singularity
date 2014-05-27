@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'singularity_client/cli'
+SingularityClient::CLI.start

@@ -1,0 +1,2 @@
+SINGULARITY_URL: 'http://mergeatron.dev-be-aws.net'
+SINGULARITY_PORT: '3306'
