@@ -1,2 +1,4 @@
-SINGULARITY_URL: 'http://mergeatron.dev-be-aws.net'
-SINGULARITY_PORT: '3306'
+singularity_url: 'http://mergeatron.dev-be-aws.net'
+singularity_port: '3306'
+
+github_organization: 'BehanceOps'

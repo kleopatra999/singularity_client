@@ -1,32 +1,49 @@
 require 'yaml'
+require 'pathname'
 
 module SingularityClient
   class Config
-    FILENAME = '.singularity.yml'
+    DOTFILE = '.singularity.yml'
 
-    attr_reader :options
+    attr_accessor :options
 
-    def initialize
-      @config_file = default_config_file
-      @options = load_from_file
+    def initialize(inputs)
+      config_file = inputs['config'] || find_config_file('.')
+      @options = load_from_file(config_file).merge(inputs)
+
+      puts "DEBUG: Using configuration from #{config_file}" if debug
+      puts "DEBUG: Current configuration: #{@options}" if debug
     end
 
-    def default_config_file
-      File.join(Dir.pwd, '.singularity.yml')
-    end
-
-    def load_from_file
-      unless File.exists?(@config_file)
-        raise "Could not find .singularity.yml file"
+    def find_config_file(dir)
+      Pathname.new(File.expand_path(dir)).ascend do |path|
+        file = File.join(path.to_s, DOTFILE)
+        if File.exist?(file)
+          return file
+        end
       end
 
-      puts "Using configuration from #{@config_file}"
-      hash = YAML.load_file(@config_file)
+      raise "Could not find .singularity.yml"
+    end
+
+    def load_from_file(file)
+      unless File.exists?(file)
+        raise "ERROR: #{file} does not exist"
+      end
+
+      hash = YAML.load_file(file)
     end
 
     def base_uri
-      "#{options['SINGULARITY_URL']}:#{options['SINGULARITY_PORT']}"
+      "#{@options['singularity_url']}:#{@options['singularity_port']}"
     end
 
+    def organization
+      @options['github_organization']
+    end
+
+    def debug
+      @options.has_key?('debug')
+    end
   end
 end
