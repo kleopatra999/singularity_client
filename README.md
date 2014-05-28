@@ -36,13 +36,13 @@ and will work its way up to the root directory. Specify a path via the `--config
     <td><tt>singularity_url</tt></td>
     <td>URL for the singularity server</td>
     <td>String</td>
-    <td><tt>'http://mergeatron.dev-be-aws.net'</tt></td>
+    <td><tt>'http://singularity.net'</tt></td>
   </tr>
   <tr>
     <td><tt>singularity_port</tt></td>
     <td>Port the singularity server is operating on</td>
     <td>String</td>
-    <td><tt>'3306'</tt></td>
+    <td><tt>'9000'</tt></td>
   </tr>
   <tr>
     <td><tt>github_organization</tt></td>
