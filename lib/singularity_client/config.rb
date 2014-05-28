@@ -24,7 +24,7 @@ module SingularityClient
     end
 
     def debug
-      @options.has_key?('debug')
+      @options.key?('debug')
     end
 
     private
@@ -36,12 +36,12 @@ module SingularityClient
         end
       end
 
-      raise "Could not find .singularity.yml"
+      fail 'Could not find .singularity.yml'
     end
 
     def load_from_file(file)
       unless File.exists?(file)
-        raise "ERROR: #{file} does not exist"
+        fail "ERROR: #{file} does not exist"
       end
 
       hash = YAML.load_file(file)
