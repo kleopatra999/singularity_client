@@ -1,0 +1,1 @@
+require 'singularity_client'

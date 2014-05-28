@@ -15,6 +15,19 @@ module SingularityClient
       puts "DEBUG: Current configuration: #{@options}" if debug
     end
 
+    def base_uri
+      "#{@options['singularity_url']}:#{@options['singularity_port']}"
+    end
+
+    def organization
+      @options['github_organization']
+    end
+
+    def debug
+      @options.has_key?('debug')
+    end
+
+    private
     def find_config_file(dir)
       Pathname.new(File.expand_path(dir)).ascend do |path|
         file = File.join(path.to_s, DOTFILE)
@@ -32,18 +45,6 @@ module SingularityClient
       end
 
       hash = YAML.load_file(file)
-    end
-
-    def base_uri
-      "#{@options['singularity_url']}:#{@options['singularity_port']}"
-    end
-
-    def organization
-      @options['github_organization']
-    end
-
-    def debug
-      @options.has_key?('debug')
     end
   end
 end

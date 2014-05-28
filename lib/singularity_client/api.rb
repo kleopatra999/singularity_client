@@ -14,11 +14,10 @@ module SingularityClient
       response = HTTParty.get(request)
 
       if response.code == 200
-        # pp JSON.parse(response.body)
+        pp JSON.parse(response.body)
       else
         raise "ERROR #{response.code} #{response.message}"
       end
-
     end
 
     def self.add(config, repo, project)
@@ -32,7 +31,7 @@ module SingularityClient
 
       puts "DEBUG: sending post request to #{request}" if config.debug
       puts "DEBUG: with post_data #{post_data}" if config.debug
-      
+
       response = HTTParty.post(request, :body => post_data)
 
       if (response.code == 200)
