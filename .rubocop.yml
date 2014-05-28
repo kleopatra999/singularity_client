@@ -1,0 +1,4 @@
+AllCops:
+  Includes:
+    - Rakefile
+    - Gemfile

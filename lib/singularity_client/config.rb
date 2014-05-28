@@ -42,8 +42,6 @@ module SingularityClient
     end
 
     def load_from_file(file)
-      fail "ERROR: #{file} does not exist" unless File.exists?(file)
-
       YAML.load_file(file)
     end
   end

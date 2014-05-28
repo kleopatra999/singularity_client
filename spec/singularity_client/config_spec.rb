@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe SingularityClient::Config do
-  describe 'options' do
+  describe '@options' do
     describe 'merged correctly' do
       it 'when no inputs' do
         config = SingularityClient::Config.new({})
@@ -53,4 +53,37 @@ describe SingularityClient::Config do
       end
     end
   end
+
+  let(:config) { SingularityClient::Config.new({}) }
+
+  describe '#base_uri' do
+    it 'returns base_uri' do
+      expect(config.base_uri).to eql('http://mergeatron.dev-be-aws.net:3306')
+    end
+  end
+
+  describe '#organization' do
+    it 'returns organization from file' do
+      expect(config.organization).to eql('BehanceOps')
+    end
+
+    it 'returns command line organization' do
+      config = SingularityClient::Config.new('github_organization' => 'Test')
+
+      expect(config.organization).to eql('Test')
+    end
+  end
+
+  describe '#debug' do
+    it 'returns false by default' do
+      expect(config.debug).to eql(false)
+    end
+
+    it 'returns true when set' do
+      config = SingularityClient::Config.new('debug' => true)
+
+      expect(config.debug).to eql(true)
+    end
+  end
+
 end
