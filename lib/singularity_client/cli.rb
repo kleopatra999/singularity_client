@@ -1,7 +1,10 @@
+# encoding: utf-8
+
 require 'thor'
 require 'singularity_client'
 
 module SingularityClient
+  # Handles all command line interface logic
   class CLI < Thor
     attr_reader :config_hash
 

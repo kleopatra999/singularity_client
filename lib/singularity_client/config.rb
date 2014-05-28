@@ -1,7 +1,10 @@
+# encoding: utf-8
+
 require 'yaml'
 require 'pathname'
 
 module SingularityClient
+  # Wrapper around the config object
   class Config
     DOTFILE = '.singularity.yml'
 
@@ -28,23 +31,20 @@ module SingularityClient
     end
 
     private
+
     def find_config_file(dir)
       Pathname.new(File.expand_path(dir)).ascend do |path|
         file = File.join(path.to_s, DOTFILE)
-        if File.exist?(file)
-          return file
-        end
+        return file if File.exist?(file)
       end
 
       fail 'Could not find .singularity.yml'
     end
 
     def load_from_file(file)
-      unless File.exists?(file)
-        fail "ERROR: #{file} does not exist"
-      end
+      fail "ERROR: #{file} does not exist" unless File.exists?(file)
 
-      hash = YAML.load_file(file)
+      YAML.load_file(file)
     end
   end
 end
