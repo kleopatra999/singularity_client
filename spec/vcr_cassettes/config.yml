@@ -1,0 +1,32 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://mergeatron.dev-be-aws.net:3306/config
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '9019'
+      Etag:
+      - ! '"-1618218809"'
+      Date:
+      - Mon, 02 Jun 2014 20:27:17 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"github":{"ci_user":"bejudged","repositories":["aws","bevarnish"]},"jenkins":{"has_global_trigger_token":true,"projects":[{"name":"branch-cookbook-aws","repo":"aws","has_trigger_token":true},{"name":"branch-cookbook-bevarnish","repo":"bevarnish","has_trigger_token":false}],"push_projects":[]}}'
+    http_version: 
+  recorded_at: Mon, 02 Jun 2014 20:27:17 GMT
+recorded_with: VCR 2.9.2

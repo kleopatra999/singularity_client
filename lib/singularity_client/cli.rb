@@ -34,5 +34,12 @@ module SingularityClient
     def add(repo, project)
       SingularityClient::API.add(config_hash, repo, project)
     end
+
+    desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
+    method_option :github_organization, aliases: '-o', type: :string,
+      desc: 'Override the default github organization'
+    def comment(repo, pr, comment)
+      SingularityClient::API.comment(config_hash, repo, pr, comment)
+    end
   end
 end

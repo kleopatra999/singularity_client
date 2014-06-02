@@ -2,3 +2,9 @@ AllCops:
   Includes:
     - Rakefile
     - Gemfile
+  Excludes:
+    - spec/vcr_cassettes/*
+
+MethodLength:
+  Max: 20
+  CountComments: false

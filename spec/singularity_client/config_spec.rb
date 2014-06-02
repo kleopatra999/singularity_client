@@ -3,6 +3,20 @@
 require 'spec_helper'
 
 describe SingularityClient::Config do
+  describe '.initialize' do
+    describe 'when no .singularity.yml found' do
+      it 'raises an exception' do
+        expect(File).to receive(:exist?)
+                        .at_least(:once)
+                        .with(/.*\/.singularity.yml/)
+                        .and_return(false)
+
+        expect { SingularityClient::Config.new({}) }
+          .to raise_error(RuntimeError, 'Could not find .singularity.yml')
+      end
+    end
+  end
+
   describe '@options' do
     describe 'merged correctly' do
       it 'when no inputs' do
@@ -17,14 +31,14 @@ describe SingularityClient::Config do
 
       it 'when provided a config path' do
         config = SingularityClient::Config.new(
-          'config' => '../.singularity.yml'
+          'config' => './.singularity.yml'
         )
 
         expect(config.options).to eql(
-          'singularity_url' => 'http://mergeatron.net',
+          'singularity_url' => 'http://mergeatron.dev-be-aws.net',
           'singularity_port' => '3306',
           'github_organization' => 'BehanceOps',
-          'config' => '../.singularity.yml'
+          'config' => './.singularity.yml'
         )
       end
 
