@@ -6,7 +6,10 @@ describe SingularityClient::Config do
   describe '.initialize' do
     describe 'when no .singularity.yml found' do
       it 'raises an exception' do
-        File.stub(:exist?).with(/.*\/.singularity.yml/).and_return(false)
+        expect(File).to receive(:exist?)
+                        .at_least(:once)
+                        .with(/.*\/.singularity.yml/)
+                        .and_return(false)
 
         expect { SingularityClient::Config.new({}) }
           .to raise_error(RuntimeError, 'Could not find .singularity.yml')

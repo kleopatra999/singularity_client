@@ -52,7 +52,7 @@ describe SingularityClient::API do
     describe 'when it receives a succesful response' do
       it 'it returns success!' do
         VCR.use_cassette('add') do
-          STDOUT.should_receive(:puts).with('success!')
+          expect(STDOUT).to receive(:puts).with('success!')
           add
         end
       end
@@ -68,7 +68,7 @@ describe SingularityClient::API do
     describe 'when it receives a succesful response' do
       it 'it returns success!' do
         VCR.use_cassette('comment') do
-          STDOUT.should_receive(:puts).with('success!')
+          expect(STDOUT).to receive(:puts).with('success!')
           comment
         end
       end
