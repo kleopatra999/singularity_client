@@ -6,23 +6,9 @@ describe SingularityClient::API do
 
   let(:config_obj) do
     double('config',
-           base_uri: 'test.net',
+           base_uri: 'http://mergeatron.dev-be-aws.net:3306',
            debug: false,
            organization: 'some_org'
-    )
-  end
-
-  let(:http_response) do
-    double('http_response',
-           code: 200,
-           body: '{"repo": "test"}'
-    )
-  end
-
-  let(:bad_response) do
-    double('bad_response',
-           code: 404,
-           message: 'Some error'
     )
   end
 
@@ -31,21 +17,29 @@ describe SingularityClient::API do
 
     describe 'when it receives a succesful response' do
       it 'it parses and displays the config' do
-        HTTParty.should_receive(:get)
-                .with('test.net/config')
-                .and_return(http_response)
+        expected_response = {
+          'github' => {
+            'ci_user' => 'bejudged',
+            'repositories' => %w(aws bevarnish)
+          },
+          'jenkins' => {
+            'has_global_trigger_token' => true,
+            'projects' => [{
+              'name' => 'branch-cookbook-aws',
+              'repo' => 'aws',
+              'has_trigger_token' => true
+            }, {
+              'name' => 'branch-cookbook-bevarnish',
+              'repo' => 'bevarnish',
+              'has_trigger_token' => false
+            }],
+            'push_projects' => []
+          }
+        }
 
-        expect(config).to eql('repo' => 'test')
-      end
-    end
-
-    describe 'when it receives a bad response' do
-      it 'raises an exception' do
-        HTTParty.should_receive(:get)
-                .with('test.net/config')
-                .and_return(bad_response)
-
-        expect { config }.to raise_error(RuntimeError, 'ERROR 404 Some error')
+        VCR.use_cassette('config') do
+          expect(config).to eq(expected_response)
+        end
       end
     end
   end
@@ -55,32 +49,28 @@ describe SingularityClient::API do
       SingularityClient::API.add(config_obj, 'test_repo', 'test_project')
     end
 
-    options = {
-      body: {
-        organization: 'some_org',
-        repo: 'test_repo',
-        project: 'test_project'
-      }
-    }
+    describe 'when it receives a succesful response' do
+      it 'it returns success!' do
+        VCR.use_cassette('add') do
+          STDOUT.should_receive(:puts).with('success!')
+          add
+        end
+      end
+    end
+  end
+
+  describe '.comment' do
+    subject(:comment) do
+      comment = 'This is some test comment'
+      SingularityClient::API.comment(config_obj, 'test_repo', '12', comment)
+    end
 
     describe 'when it receives a succesful response' do
       it 'it returns success!' do
-        HTTParty.should_receive(:post)
-                .with('test.net/config/pull_request', options)
-                .and_return(http_response)
-
-        STDOUT.should_receive(:puts).with('success!')
-        add
-      end
-    end
-
-    describe 'when it receives a bad response' do
-      it 'raises an exception' do
-        HTTParty.should_receive(:post)
-                .with('test.net/config/pull_request', options)
-                .and_return(bad_response)
-
-        expect { add }.to raise_error(RuntimeError, 'ERROR 404 Some error')
+        VCR.use_cassette('comment') do
+          STDOUT.should_receive(:puts).with('success!')
+          comment
+        end
       end
     end
   end

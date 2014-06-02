@@ -17,14 +17,14 @@ describe SingularityClient::Config do
 
       it 'when provided a config path' do
         config = SingularityClient::Config.new(
-          'config' => '../.singularity.yml'
+          'config' => './.singularity.yml'
         )
 
         expect(config.options).to eql(
-          'singularity_url' => 'http://mergeatron.net',
+          'singularity_url' => 'http://mergeatron.dev-be-aws.net',
           'singularity_port' => '3306',
           'github_organization' => 'BehanceOps',
-          'config' => '../.singularity.yml'
+          'config' => './.singularity.yml'
         )
       end
 
