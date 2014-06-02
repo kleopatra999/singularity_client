@@ -21,7 +21,7 @@ module SingularityClient
       response.code == 200 ? response : error(response)
     end
 
-    def post(endpoint, data)
+    def post(endpoint, data = {})
       request = "#{@base_uri}/#{endpoint}"
       puts "DEBUG: sending post request to #{request}" if @debug
       puts "DEBUG: with post_data #{data}" if @debug

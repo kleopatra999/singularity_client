@@ -15,9 +15,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before do
-    IO.any_instance.stub(:puts)
-  end
+  # config.before do
+  #   IO.any_instance.stub(:puts)
+  # end
 end
 
 VCR.configure do |c|
