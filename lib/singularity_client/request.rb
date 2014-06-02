@@ -12,11 +12,11 @@ module SingularityClient
       @debug = config.debug
     end
 
-    def get(endpoint, query = '')
+    def get(endpoint, query = {})
       request = "#{@base_uri}/#{endpoint}"
       puts "DEBUG: sending get request #{request}" if @debug
 
-      response = self.class.get(request)
+      response = self.class.get(request, query)
 
       response.code == 200 ? response : error(response)
     end
