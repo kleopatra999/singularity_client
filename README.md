@@ -56,9 +56,10 @@ and will work its way up to the root directory. Specify a path via the `--config
 
 ```
 Commands:
-  singularity add REPO_NAME PROJECT_NAME  # Add a github repository to singularity
-  singularity config                      # Get the current singularity config object
-  singularity help [COMMAND]              # Describe available commands or one specific command
+  singularity add REPO_NAME PROJECT_NAME        # Add a github repository to singularity
+  singularity comment REPO_NAME PR_NUM COMMENT  # Write comment to a pull request
+  singularity config                            # Get the current singularity config object
+  singularity help [COMMAND]                    # Describe available commands or one specific command
 
 Options:
   -c, [--config=CONFIG]                      # Specify path to a .singularity.yml file
