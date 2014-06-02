@@ -7,7 +7,7 @@ require 'rspec/core/rake_task'
 
 namespace :test do
 
-  Rubocop::RakeTask.new(:rubocop)
+  RuboCop::RakeTask.new(:rubocop)
 
   RSpec::Core::RakeTask.new(:rspec) do |t|
     t.rspec_opts = '--format documentation --color'
