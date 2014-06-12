@@ -18,10 +18,11 @@ Or install it yourself as:
 
 ## Configuration
 
-The singularity client configures itself off a `.singularity.yml` file.
+Configuration options may be declared from the command line,
+or defined in a `.singularity.yml` file.
 
 By default, the tool will start looking for a `.singularity.yml` in your current working directory,
-and will work its way up to the root directory. Specify a path via the `--config` command line option.
+and will work its way up to the root directory. Specify a file via the `--config` command line option.
 
 ### Available configurations:
 
@@ -30,24 +31,28 @@ and will work its way up to the root directory. Specify a path via the `--config
     <th>Key</th>
     <th>Description</th>
     <th>Type</th>
+    <th>Required</th>
     <th>Example</th>
   </tr>
   <tr>
     <td><tt>singularity_url</tt></td>
     <td>URL for the singularity server</td>
     <td>String</td>
+    <td>Yes</td>
     <td><tt>'http://singularity.net'</tt></td>
   </tr>
   <tr>
     <td><tt>singularity_port</tt></td>
     <td>Port the singularity server is operating on</td>
     <td>String</td>
+    <td>Yes</td>
     <td><tt>'9000'</tt></td>
   </tr>
   <tr>
     <td><tt>github_organization</tt></td>
     <td>Default github organization to use</td>
     <td>String</td>
+    <td>No</td>
     <td><tt>'Behance'</tt></td>
   </tr>
 </table>
