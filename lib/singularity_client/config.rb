@@ -6,16 +6,15 @@ require 'pathname'
 module SingularityClient
   # Wrapper around the config object
   class Config
-    DOTFILE = '.singularity.yml'
-
     attr_accessor :options
 
-    def initialize(inputs)
-      config_file = inputs['config'] || find_config_file('.')
-      @options = load_from_file(config_file).merge(inputs)
+    def initialize(inputs = {})
+      @options = ConfigLoader.load_from_file(inputs['config'], inputs['debug'])
+      @options = @options.merge(inputs)
 
-      puts "DEBUG: Using configuration from #{config_file}" if debug
       puts "DEBUG: Current configuration: #{@options}" if debug
+
+      validate_config
     end
 
     def base_uri
@@ -27,22 +26,28 @@ module SingularityClient
     end
 
     def debug
-      @options.key?('debug')
+      @options.key? 'debug'
     end
 
     private
 
-    def find_config_file(dir)
-      Pathname.new(File.expand_path(dir)).ascend do |path|
-        file = File.join(path.to_s, DOTFILE)
-        return file if File.exist?(file)
+    def validate_config
+      required_fields = %w(
+        singularity_url
+        singularity_port
+      )
+
+      required_fields.all? do |field|
+        if @options.key? field
+          true
+        else
+          fail <<-ERR.gsub(/^[\s\t]*/, '').gsub(/[\s\t]*\n/, ' ').strip
+            #{field} not defined. Please see
+            https://github.com/behance/singularity_client#configuration
+            for configuration options
+          ERR
+        end
       end
-
-      fail 'Could not find .singularity.yml'
-    end
-
-    def load_from_file(file)
-      YAML.load_file(file)
     end
   end
 end
