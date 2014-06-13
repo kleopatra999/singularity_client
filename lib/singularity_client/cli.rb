@@ -10,7 +10,7 @@ module SingularityClient
 
     def initialize(*args)
       super
-      @config_hash = SingularityClient::Config.new(options)
+      @cli_options = options
     end
 
     # rubocop:disable AlignHash
@@ -25,21 +25,28 @@ module SingularityClient
 
     desc 'config', 'Get the current singularity config object'
     def config
-      SingularityClient::API.config(config_hash)
+      run(:config)
     end
 
     desc 'add REPO_NAME PROJECT_NAME', 'Add a github repository to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add(repo, project)
-      SingularityClient::API.add(config_hash, repo, project)
+      run(:add, repo, project)
     end
 
     desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def comment(repo, pr, comment)
-      SingularityClient::API.comment(config_hash, repo, pr, comment)
+      run(:comment, repo, pr, comment)
+    end
+
+    private
+
+    def run(action, *args)
+      config = SingularityClient::Config.new(@cli_options)
+      SingularityClient::API.send(action, config, *args)
     end
   end
 end

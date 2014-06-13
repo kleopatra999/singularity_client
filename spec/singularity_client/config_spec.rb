@@ -4,16 +4,20 @@ require 'spec_helper'
 
 describe SingularityClient::Config do
   describe '.initialize' do
-    describe 'when no .singularity.yml found' do
-      it 'raises an exception' do
-        expect(File).to receive(:exist?)
-                        .at_least(:once)
-                        .with(/.*\/.singularity.yml/)
-                        .and_return(false)
+    it 'raises an exception if validation fails' do
+      expect(File).to receive(:exist?)
+                      .at_least(:once)
+                      .with(/.*\/.singularity.yml/)
+                      .and_return(false)
 
-        expect { SingularityClient::Config.new({}) }
-          .to raise_error(RuntimeError, 'Could not find .singularity.yml')
-      end
+      error = <<-ERR.gsub(/^[\s\t]*/, '').gsub(/[\s\t]*\n/, ' ').strip
+        singularity_port not defined. Please see
+        https://github.com/behance/singularity_client#configuration
+        for configuration options
+      ERR
+      expect do
+        SingularityClient::Config.new('singularity_url' => 'test.url')
+      end .to raise_error(RuntimeError, error)
     end
   end
 
