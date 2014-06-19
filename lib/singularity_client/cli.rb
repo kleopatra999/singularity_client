@@ -40,14 +40,14 @@ module SingularityClient
     desc 'addPull REPO_NAME PROJECT_NAME', 'Add repo pulls to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
-    def addPull(repo, project)
+    def add_pull(repo, project)
       run(:add, repo, project, 'pull_request')
     end
 
     desc 'addPush REPO_NAME PROJECT_NAME', 'Add repo pushes to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
-    def addPush(repo, project)
+    def add_push(repo, project)
       run(:add, repo, project, 'push')
     end
 
