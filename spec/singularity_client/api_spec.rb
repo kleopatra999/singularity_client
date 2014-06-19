@@ -45,15 +45,41 @@ describe SingularityClient::API do
   end
 
   describe '.add' do
-    subject(:add) do
-      SingularityClient::API.add(config_obj, 'test_repo', 'test_project')
+
+    describe 'Adding a pull_request' do
+      subject(:add) do
+        SingularityClient::API.add(config_obj,
+                                   'test_repo',
+                                   'test_project',
+                                   'pull_request'
+        )
+      end
+
+      describe 'when it receives a succesful response' do
+        it 'it returns success!' do
+          VCR.use_cassette('addPull') do
+            expect(STDOUT).to receive(:puts).with('success!')
+            add
+          end
+        end
+      end
     end
 
-    describe 'when it receives a succesful response' do
-      it 'it returns success!' do
-        VCR.use_cassette('add') do
-          expect(STDOUT).to receive(:puts).with('success!')
-          add
+    describe 'Adding a push' do
+      subject(:add) do
+        SingularityClient::API.add(config_obj,
+                                   'test_repo',
+                                   'test_project',
+                                   'push'
+        )
+      end
+
+      describe 'when it receives a succesful response' do
+        it 'it returns success!' do
+          VCR.use_cassette('addPush') do
+            expect(STDOUT).to receive(:puts).with('success!')
+            add
+          end
         end
       end
     end

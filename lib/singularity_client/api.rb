@@ -17,8 +17,15 @@ module SingularityClient
       pp(JSON.parse(response.body))
     end
 
-    def self.add(config, repo, project)
-      endpoint = 'config/pull_request'
+    ##
+    # Add to the singularity config
+    # the 'type' parameter can be pull_request or push
+    #
+    def self.add(config, repo, project, type)
+      # This is just to maintain backwards compatability
+      type ||= 'pull_request'
+
+      endpoint = (type == 'push') ? 'config/push' : 'config/pull_request'
       post_data = {
         organization: config.organization,
         repo: repo,

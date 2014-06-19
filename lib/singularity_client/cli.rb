@@ -29,10 +29,26 @@ module SingularityClient
     end
 
     desc 'add REPO_NAME PROJECT_NAME', 'Add a github repository to singularity'
+    long_desc 'This will add both pull requests, and pushes, to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add(repo, project)
-      run(:add, repo, project)
+      run(:add, repo, project, 'pull_request')
+      run(:add, repo, project, 'push')
+    end
+
+    desc 'addPull REPO_NAME PROJECT_NAME', 'Add repo pulls to singularity'
+    method_option :github_organization, aliases: '-o', type: :string,
+      desc: 'Override the default github organization'
+    def add_pull(repo, project)
+      run(:add, repo, project, 'pull_request')
+    end
+
+    desc 'addPush REPO_NAME PROJECT_NAME', 'Add repo pushes to singularity'
+    method_option :github_organization, aliases: '-o', type: :string,
+      desc: 'Override the default github organization'
+    def add_push(repo, project)
+      run(:add, repo, project, 'push')
     end
 
     desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
