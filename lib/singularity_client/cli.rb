@@ -41,22 +41,29 @@ module SingularityClient
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add_pull(repo, project)
-      run(:add, repo, project, 'pull_request')
+      run(:add, repo, project, 'proposal')
     end
 
     desc 'add_push REPO_NAME PROJECT_NAME', 'Add repo pushes to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add_push(repo, project)
-      run(:add, repo, project, 'push')
+      run(:add, repo, project, 'change')
     end
 
-    desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
+    desc 'remove_repo REPO_NAME', 'Remove a repository from the config'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
-    def comment(repo, pr, comment)
-      run(:comment, repo, pr, comment)
+    def remove_repo(repo)
+      run(:remove, repo)
     end
+
+    # desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
+    # method_option :github_organization, aliases: '-o', type: :string,
+    #   desc: 'Override the default github organization'
+    # def comment(repo, pr, comment)
+    #   run(:comment, repo, pr, comment)
+    # end
 
     private
 

@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://mergeatron.dev-be-aws.net:3306/config/push
+    uri: http://mergeatron.dev-be-aws.net:3306/config
     body:
       encoding: US-ASCII
-      string: organization=some_org&repo=test_repo&project=test_project
+      string: type=change&repo=some_org/test_repo&project=test_project
     headers: {}
   response:
     status:

@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: http://mergeatron.dev-be-aws.net:3306/config/pull_request
+    method: delete
+    uri: http://mergeatron.dev-be-aws.net:3306/config
     body:
       encoding: US-ASCII
-      string: organization=some_org&repo=test_repo&project=test_project
+      string: repo=some_org/test_repo
     headers: {}
   response:
     status:
