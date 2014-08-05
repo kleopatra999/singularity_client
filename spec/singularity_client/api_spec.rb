@@ -87,7 +87,7 @@ describe SingularityClient::API do
     describe '.remove' do
       subject(:remove) do
         SingularityClient::API.remove(config_obj,
-                                   'test_repo'
+                                      'test_repo'
         )
       end
 

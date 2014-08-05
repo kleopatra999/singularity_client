@@ -22,8 +22,9 @@ module SingularityClient
     # the 'type' parameter can be pull_request or push
     #
     def self.add(config, repo, project, type)
-      unless type === 'proposal' || type === 'change'
-        fail ("ERROR invalid type: #{type}. Valid types are 'proposal' or 'change'")
+      unless type == 'proposal' || type == 'change'
+        fail("ERROR invalid type: #{type}. \
+              Valid types are \'proposal\' or \'change\'")
       end
 
       endpoint = 'config'
