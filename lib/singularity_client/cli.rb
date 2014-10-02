@@ -33,8 +33,8 @@ module SingularityClient
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add(repo, project)
-      run(:add, repo, project, 'pull_request')
-      run(:add, repo, project, 'push')
+      run(:add, repo, project, 'proposal')
+      run(:add, repo, project, 'change')
     end
 
     desc 'add_pull REPO_NAME PROJECT_NAME', 'Add repo pulls to singularity'
