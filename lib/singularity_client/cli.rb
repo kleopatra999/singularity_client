@@ -23,40 +23,47 @@ module SingularityClient
     class_option :debug, aliases: '-d', type: :boolean,
       desc: 'Turn on debug mode'
 
-    desc 'config', 'Get the current singularity config object'
-    def config
-      run(:config)
-    end
+    # desc 'config', 'Get the current singularity config object'
+    # def config
+    #   run(:config)
+    # end
 
     desc 'add REPO_NAME PROJECT_NAME', 'Add a github repository to singularity'
     long_desc 'This will add both pull requests, and pushes, to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add(repo, project)
-      run(:add, repo, project, 'pull_request')
-      run(:add, repo, project, 'push')
+      run(:add, repo, project, 'proposal')
+      run(:add, repo, project, 'change')
     end
 
     desc 'add_pull REPO_NAME PROJECT_NAME', 'Add repo pulls to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add_pull(repo, project)
-      run(:add, repo, project, 'pull_request')
+      run(:add, repo, project, 'proposal')
     end
 
     desc 'add_push REPO_NAME PROJECT_NAME', 'Add repo pushes to singularity'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
     def add_push(repo, project)
-      run(:add, repo, project, 'push')
+      run(:add, repo, project, 'change')
     end
 
-    desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
+    desc 'remove_repo REPO_NAME', 'Remove a repository from the config'
     method_option :github_organization, aliases: '-o', type: :string,
       desc: 'Override the default github organization'
-    def comment(repo, pr, comment)
-      run(:comment, repo, pr, comment)
+    def remove_repo(repo)
+      run(:remove, repo)
     end
+
+    # desc 'comment REPO_NAME PR_NUM COMMENT', 'Write comment to a pull request'
+    # method_option :github_organization, aliases: '-o', type: :string,
+    #   desc: 'Override the default github organization'
+    # def comment(repo, pr, comment)
+    #   run(:comment, repo, pr, comment)
+    # end
 
     private
 

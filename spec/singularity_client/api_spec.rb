@@ -12,37 +12,37 @@ describe SingularityClient::API do
     )
   end
 
-  describe '.config' do
-    subject(:config) { SingularityClient::API.config(config_obj) }
-
-    describe 'when it receives a succesful response' do
-      it 'it parses and displays the config' do
-        expected_response = {
-          'github' => {
-            'ci_user' => 'bejudged',
-            'repositories' => %w(aws bevarnish)
-          },
-          'jenkins' => {
-            'has_global_trigger_token' => true,
-            'projects' => [{
-              'name' => 'branch-cookbook-aws',
-              'repo' => 'aws',
-              'has_trigger_token' => true
-            }, {
-              'name' => 'branch-cookbook-bevarnish',
-              'repo' => 'bevarnish',
-              'has_trigger_token' => false
-            }],
-            'push_projects' => []
-          }
-        }
-
-        VCR.use_cassette('config') do
-          expect(config).to eq(expected_response)
-        end
-      end
-    end
-  end
+  # describe '.config' do
+  #   subject(:config) { SingularityClient::API.config(config_obj) }
+  #
+  #   describe 'when it receives a succesful response' do
+  #     it 'it parses and displays the config' do
+  #       expected_response = {
+  #         'github' => {
+  #           'ci_user' => 'bejudged',
+  #           'repositories' => %w(aws bevarnish)
+  #         },
+  #         'jenkins' => {
+  #           'has_global_trigger_token' => true,
+  #           'projects' => [{
+  #             'name' => 'branch-cookbook-aws',
+  #             'repo' => 'aws',
+  #             'has_trigger_token' => true
+  #           }, {
+  #             'name' => 'branch-cookbook-bevarnish',
+  #             'repo' => 'bevarnish',
+  #             'has_trigger_token' => false
+  #           }],
+  #           'push_projects' => []
+  #         }
+  #       }
+  #
+  #       VCR.use_cassette('config') do
+  #         expect(config).to eq(expected_response)
+  #       end
+  #     end
+  #   end
+  # end
 
   describe '.add' do
 
@@ -51,13 +51,13 @@ describe SingularityClient::API do
         SingularityClient::API.add(config_obj,
                                    'test_repo',
                                    'test_project',
-                                   'pull_request'
+                                   'proposal'
         )
       end
 
       describe 'when it receives a succesful response' do
         it 'it returns success!' do
-          VCR.use_cassette('addPull') do
+          VCR.use_cassette('addProposal') do
             expect(STDOUT).to receive(:puts).with('success!')
             add
           end
@@ -70,34 +70,51 @@ describe SingularityClient::API do
         SingularityClient::API.add(config_obj,
                                    'test_repo',
                                    'test_project',
-                                   'push'
+                                   'change'
         )
       end
 
       describe 'when it receives a succesful response' do
         it 'it returns success!' do
-          VCR.use_cassette('addPush') do
+          VCR.use_cassette('addChange') do
             expect(STDOUT).to receive(:puts).with('success!')
             add
           end
         end
       end
     end
-  end
 
-  describe '.comment' do
-    subject(:comment) do
-      comment = 'This is some test comment'
-      SingularityClient::API.comment(config_obj, 'test_repo', '12', comment)
-    end
+    describe '.remove' do
+      subject(:remove) do
+        SingularityClient::API.remove(config_obj,
+                                      'test_repo'
+        )
+      end
 
-    describe 'when it receives a succesful response' do
-      it 'it returns success!' do
-        VCR.use_cassette('comment') do
-          expect(STDOUT).to receive(:puts).with('success!')
-          comment
+      describe 'Delete a repo' do
+        it 'returns success!' do
+          VCR.use_cassette('removeRepo') do
+            expect(STDOUT).to receive(:puts).with('success!')
+            remove
+          end
         end
       end
     end
   end
+
+  # describe '.comment' do
+  #   subject(:comment) do
+  #     comment = 'This is some test comment'
+  #     SingularityClient::API.comment(config_obj, 'test_repo', '12', comment)
+  #   end
+  #
+  #   describe 'when it receives a succesful response' do
+  #     it 'it returns success!' do
+  #       VCR.use_cassette('comment') do
+  #         expect(STDOUT).to receive(:puts).with('success!')
+  #         comment
+  #       end
+  #     end
+  #   end
+  # end
 end
