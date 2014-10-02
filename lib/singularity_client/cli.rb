@@ -23,10 +23,10 @@ module SingularityClient
     class_option :debug, aliases: '-d', type: :boolean,
       desc: 'Turn on debug mode'
 
-    desc 'config', 'Get the current singularity config object'
-    def config
-      run(:config)
-    end
+    # desc 'config', 'Get the current singularity config object'
+    # def config
+    #   run(:config)
+    # end
 
     desc 'add REPO_NAME PROJECT_NAME', 'Add a github repository to singularity'
     long_desc 'This will add both pull requests, and pushes, to singularity'

@@ -8,14 +8,14 @@ require 'singularity_client/request'
 module SingularityClient
   # Handles the singularity api
   class API
-    def self.config(config)
-      endpoint = 'config'
-
-      request = SingularityClient::Request.new(config)
-      response = request.get(endpoint)
-
-      pp(JSON.parse(response.body))
-    end
+    # def self.config(config)
+    #   endpoint = 'config'
+    #
+    #   request = SingularityClient::Request.new(config)
+    #   response = request.get(endpoint)
+    #
+    #   pp(JSON.parse(response.body))
+    # end
 
     ##
     # Add to the singularity config

@@ -12,37 +12,37 @@ describe SingularityClient::API do
     )
   end
 
-  describe '.config' do
-    subject(:config) { SingularityClient::API.config(config_obj) }
-
-    describe 'when it receives a succesful response' do
-      it 'it parses and displays the config' do
-        expected_response = {
-          'github' => {
-            'ci_user' => 'bejudged',
-            'repositories' => %w(aws bevarnish)
-          },
-          'jenkins' => {
-            'has_global_trigger_token' => true,
-            'projects' => [{
-              'name' => 'branch-cookbook-aws',
-              'repo' => 'aws',
-              'has_trigger_token' => true
-            }, {
-              'name' => 'branch-cookbook-bevarnish',
-              'repo' => 'bevarnish',
-              'has_trigger_token' => false
-            }],
-            'push_projects' => []
-          }
-        }
-
-        VCR.use_cassette('config') do
-          expect(config).to eq(expected_response)
-        end
-      end
-    end
-  end
+  # describe '.config' do
+  #   subject(:config) { SingularityClient::API.config(config_obj) }
+  #
+  #   describe 'when it receives a succesful response' do
+  #     it 'it parses and displays the config' do
+  #       expected_response = {
+  #         'github' => {
+  #           'ci_user' => 'bejudged',
+  #           'repositories' => %w(aws bevarnish)
+  #         },
+  #         'jenkins' => {
+  #           'has_global_trigger_token' => true,
+  #           'projects' => [{
+  #             'name' => 'branch-cookbook-aws',
+  #             'repo' => 'aws',
+  #             'has_trigger_token' => true
+  #           }, {
+  #             'name' => 'branch-cookbook-bevarnish',
+  #             'repo' => 'bevarnish',
+  #             'has_trigger_token' => false
+  #           }],
+  #           'push_projects' => []
+  #         }
+  #       }
+  #
+  #       VCR.use_cassette('config') do
+  #         expect(config).to eq(expected_response)
+  #       end
+  #     end
+  #   end
+  # end
 
   describe '.add' do
 
