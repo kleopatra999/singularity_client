@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: delete
-    uri: http://mergeatron.dev-be-aws.net:3306/config
+    uri: http://mergeatron.dev-be-aws.net:3306/config/repo
     body:
       encoding: US-ASCII
-      string: repo=some_org/test_repo
+      string: repository=some_org/test_repo
     headers: {}
   response:
     status:

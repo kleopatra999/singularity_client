@@ -27,10 +27,9 @@ module SingularityClient
               Valid types are \'proposal\' or \'change\'")
       end
 
-      endpoint = 'config'
+      endpoint = "config/#{type}"
       post_data = {
-        type: type,
-        repo: "#{config.organization}/#{repo}",
+        repository: "#{config.organization}/#{repo}",
         project: project
       }
 
@@ -44,10 +43,10 @@ module SingularityClient
     # Remove a repository from the singularity config
     #
     def self.remove(config, repo)
-      endpoint = 'config'
+      endpoint = 'config/repo'
 
       post_data = {
-        repo: "#{config.organization}/#{repo}"
+        repository: "#{config.organization}/#{repo}"
       }
 
       request = SingularityClient::Request.new(config)
